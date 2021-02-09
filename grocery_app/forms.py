@@ -3,6 +3,7 @@ from wtforms import StringField, DateField, SelectField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, URL
 
+
 class GroceryStoreForm(FlaskForm):
     """Form for adding/updating a GroceryStore."""
 
@@ -11,6 +12,7 @@ class GroceryStoreForm(FlaskForm):
     # - address - StringField
     # - submit button
     pass
+
 
 class GroceryItemForm(FlaskForm):
     """Form for adding/updating a GroceryItem."""
