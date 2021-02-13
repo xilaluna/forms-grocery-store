@@ -4,7 +4,6 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from grocery_app.config import Config
 import os
-from grocery_app.routes import main
 
 
 app = Flask(__name__)
@@ -18,6 +17,9 @@ login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
 bcrypt = Bcrypt(app)
+
+from grocery_app.routes import main  # nopep8
+
 
 app.register_blueprint(main)
 
