@@ -4,7 +4,6 @@ from datetime import date, datetime
 from grocery_app.models import GroceryStore, GroceryItem, ItemCategory
 from grocery_app.forms import GroceryStoreForm, GroceryItemForm
 
-# Import app and db from events_app package so that we can run app
 from grocery_app import app, db
 
 main = Blueprint("main", __name__)
@@ -51,7 +50,7 @@ def new_item():
         db.session.commit()
         flash('Item added')
         return redirect(url_for('main.item_detail', item_id=add_item.id))
-    return render_template('new_item.html')
+    return render_template('new_item.html', form=form)
 
 
 @main.route('/store/<store_id>', methods=['GET', 'POST'])

@@ -2,19 +2,18 @@
 
 <h1>New Store</h1>
 
-<form method="POST" action="{{url_for('main.store_detail')}}">
+<form method="POST" action="{{url_for('main.new_store')}}">
   {{form.csrf_token}}
   <fieldset>
     <legend>Please enter your information:</legend>
-
     <p>
-      <em
-        >{{form.title.label}} {{form.title}} {{form.address.label}}
-        {{form.address}}</em
-      >
+      <em>
+        {{form.title.label}} {{form.title}} {{form.address.label}}
+        {{form.address}}
+      </em>
     </p>
 
-    <input type="submit" value="Submit" />
+    {{ form.submit }}
   </fieldset>
 </form>
 
