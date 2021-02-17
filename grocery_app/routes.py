@@ -1,6 +1,8 @@
 from operator import add
 from flask import Blueprint, request, render_template, redirect, url_for, flash
 from datetime import date, datetime
+
+import flask_login
 from grocery_app.models import GroceryStore, GroceryItem, ItemCategory, User
 from grocery_app.forms import GroceryStoreForm, GroceryItemForm, SignUpForm, LoginForm
 from flask_login import login_user, logout_user, login_required, current_user
@@ -31,6 +33,7 @@ def new_store():
         add_store = GroceryStore(
             title=form.title.data,
             address=form.address.data,
+            created_by_id=current_user.username
         )
         db.session.add(add_store)
         db.session.commit()
@@ -49,7 +52,8 @@ def new_item():
             price=form.price.data,
             category=form.category.data,
             photo_url=form.photo_url.data,
-            store=form.store.data
+            store=form.store.data,
+            created_by_id=current_user.username
         )
         db.session.add(add_item)
         db.session.commit()
@@ -87,6 +91,27 @@ def item_detail(item_id):
         flash('Item updated')
         return redirect(url_for('main.item_detail', item_id=item.id, item=item))
     return render_template('item_detail.html', item=item, form=form)
+
+
+@main.route('/add_to_shopping_list/<item_id>', methods=['POST'])
+def add_to_shopping_list(item_id):
+    item = GroceryItem.query.filter_by(id=item_id).one()
+    user = User.query.filter_by(username=current_user.username).one()
+    user.shopping_list_items.append(
+        GroceryItem.query.filter_by(id=item_id).one())
+    db.session.add(item)
+    db.session.commit()
+
+    return redirect(url_for('main.shopping_list'))
+
+
+@main.route('/shopping_list')
+@login_required
+def shopping_list():
+    item = GroceryItem.query.join(
+        GroceryItem.users_items).filter_by(id=current_user.id).all()
+
+    return render_template('shopping_list.html', items=item)
 
 
 @auth.route('/signup', methods=['GET', 'POST'])
