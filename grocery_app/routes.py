@@ -24,6 +24,7 @@ def homepage():
 
 
 @main.route('/new_store', methods=['GET', 'POST'])
+@login_required
 def new_store():
     form = GroceryStoreForm()
     if form.validate_on_submit():
@@ -39,6 +40,7 @@ def new_store():
 
 
 @main.route('/new_item', methods=['GET', 'POST'])
+@login_required
 def new_item():
     form = GroceryItemForm()
     if form.validate_on_submit():
@@ -57,6 +59,7 @@ def new_item():
 
 
 @main.route('/store/<store_id>', methods=['GET', 'POST'])
+@login_required
 def store_detail(store_id):
     store = GroceryStore.query.get(store_id)
     form = GroceryStoreForm(obj=store)
@@ -70,6 +73,7 @@ def store_detail(store_id):
 
 
 @main.route('/item/<item_id>', methods=['GET', 'POST'])
+@login_required
 def item_detail(item_id):
     item = GroceryItem.query.get(item_id)
     form = GroceryItemForm(obj=item)

@@ -16,12 +16,21 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
+from .models import User  # nopep8
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+
 bcrypt = Bcrypt(app)
 
-from grocery_app.routes import main  # nopep8
+from grocery_app.routes import main, auth  # nopep8
 
 
 app.register_blueprint(main)
+app.register_blueprint(auth)
 
 with app.app_context():
     db.create_all()
