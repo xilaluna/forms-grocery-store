@@ -12,7 +12,7 @@
 
 <p><strong>Creator:</strong> {{ item.created_by_id }}</p>
 
-<form action="{{url_for('main.add_to_shopping_list', item_id=item.id)}}">
+<form method="POST" action="{{url_for('main.add_to_shopping_list', item_id=item.id)}}">
   <fieldset>
     <legend>Add to shopping list</legend>
     {{ form.submit }}
@@ -27,8 +27,8 @@
     <p>
       <em>
         {{form.name.label}} {{form.name}} {{form.price.label}} {{form.price}}
-        {{form.category.label}} {{form.category}} {{form.photo_url.label}}
-        {{form.photo_url}} {{form.store.label}} {{form.store}}
+        {{form.category.label}} {{form.category}} {{form.photo_url.label}} {{form.photo_url}}
+        {{form.store.label}} {{form.store}}
       </em>
     </p>
     {{ form.submit }}
